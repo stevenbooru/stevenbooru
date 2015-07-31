@@ -98,6 +98,12 @@
 			"revision": "5ec5e003b21ac1f06e175898413ada23a6797fc0",
 			"branch": "master",
 			"path": "/tiff"
+		},
+		{
+			"importpath": "github.com/yosssi/ace",
+			"repository": "https://github.com/yosssi/ace",
+			"revision": "78e48a2f0ac5fb5a642585f96b03a5f47f7775f5",
+			"branch": "master"
 		}
 	]
 }
