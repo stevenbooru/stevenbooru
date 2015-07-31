@@ -8,6 +8,12 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/Xe/uuid",
+			"repository": "https://github.com/Xe/uuid",
+			"revision": "62b230097e9c9534ca2074782b25d738c4b68964",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/codegangsta/negroni",
 			"repository": "https://github.com/codegangsta/negroni",
 			"revision": "c7477ad8e330bef55bf1ebe300cf8aa67c492d1b",
@@ -62,6 +68,12 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/scalingdata/gcfg",
+			"repository": "https://github.com/scalingdata/gcfg",
+			"revision": "37aabad69cfd3d20b8390d902a8b10e245c615ff",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/sebest/xff",
 			"repository": "https://github.com/sebest/xff",
 			"revision": "d90d345f39f4e84675192d6662c42f33a46ec830",
@@ -78,6 +90,12 @@
 			"repository": "https://github.com/unrolled/render",
 			"revision": "aa61028b1d32873eaa3e261a3ef0e892a153107b",
 			"branch": "v1"
+		},
+		{
+			"importpath": "github.com/yosssi/ace",
+			"repository": "https://github.com/yosssi/ace",
+			"revision": "78e48a2f0ac5fb5a642585f96b03a5f47f7775f5",
+			"branch": "master"
 		},
 		{
 			"importpath": "github.com/yosssi/ace-proxy",
@@ -98,12 +116,6 @@
 			"revision": "5ec5e003b21ac1f06e175898413ada23a6797fc0",
 			"branch": "master",
 			"path": "/tiff"
-		},
-		{
-			"importpath": "github.com/yosssi/ace",
-			"repository": "https://github.com/yosssi/ace",
-			"revision": "78e48a2f0ac5fb5a642585f96b03a5f47f7775f5",
-			"branch": "master"
 		}
 	]
 }
