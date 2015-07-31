@@ -14,6 +14,12 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/dchest/blake2b",
+			"repository": "https://github.com/dchest/blake2b",
+			"revision": "5fbfd071ac8d1623f86ac263c2f16e8cb2914184",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/disintegration/imaging",
 			"repository": "https://github.com/disintegration/imaging",
 			"revision": "3ab6ec550f20d497d2755ed3c48a3e45ad6b7eb9",
