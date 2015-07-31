@@ -2,10 +2,96 @@
 	"version": 0,
 	"dependencies": [
 		{
+			"importpath": "github.com/Xe/middleware",
+			"repository": "https://github.com/Xe/middleware",
+			"revision": "7d23200fbed9e7f3be4ac76b4f7f6bd19cc4aba0",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/codegangsta/negroni",
 			"repository": "https://github.com/codegangsta/negroni",
 			"revision": "c7477ad8e330bef55bf1ebe300cf8aa67c492d1b",
 			"branch": "master"
+		},
+		{
+			"importpath": "github.com/disintegration/imaging",
+			"repository": "https://github.com/disintegration/imaging",
+			"revision": "3ab6ec550f20d497d2755ed3c48a3e45ad6b7eb9",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/drone/routes",
+			"repository": "https://github.com/drone/routes",
+			"revision": "853bef2b231162bb7b09355720416d3af1510d88",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/garyburd/redigo",
+			"repository": "https://github.com/garyburd/redigo",
+			"revision": "a47585eaae68b1d14b02940d2af1b9194f3caa9c",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gorilla/context",
+			"repository": "https://github.com/gorilla/context",
+			"revision": "215affda49addc4c8ef7e2534915df2c8c35c6cd",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gorilla/mux",
+			"repository": "https://github.com/gorilla/mux",
+			"revision": "f15e0c49460fd49eebe2bcc8486b05d1bef68d3a",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/jinzhu/gorm",
+			"repository": "https://github.com/jinzhu/gorm",
+			"revision": "6a7dda9a32e187c044178aadb0a4510f053a73fa",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/lib/pq",
+			"repository": "https://github.com/lib/pq",
+			"revision": "0dad96c0b94f8dee039aa40467f767467392a0af",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/sebest/xff",
+			"repository": "https://github.com/sebest/xff",
+			"revision": "d90d345f39f4e84675192d6662c42f33a46ec830",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/thoj/go-ircevent",
+			"repository": "https://github.com/thoj/go-ircevent",
+			"revision": "c47f9d8e3db1e137c31efbd755bd563d1bf29efc",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/unrolled/render",
+			"repository": "https://github.com/unrolled/render",
+			"revision": "aa61028b1d32873eaa3e261a3ef0e892a153107b",
+			"branch": "v1"
+		},
+		{
+			"importpath": "github.com/yosssi/ace-proxy",
+			"repository": "https://github.com/yosssi/ace-proxy",
+			"revision": "ecd9b785e6023e00b1a451cdf584a30d4eff14c0",
+			"branch": "master"
+		},
+		{
+			"importpath": "golang.org/x/image/bmp",
+			"repository": "https://go.googlesource.com/image",
+			"revision": "5ec5e003b21ac1f06e175898413ada23a6797fc0",
+			"branch": "master",
+			"path": "/bmp"
+		},
+		{
+			"importpath": "golang.org/x/image/tiff",
+			"repository": "https://go.googlesource.com/image",
+			"revision": "5ec5e003b21ac1f06e175898413ada23a6797fc0",
+			"branch": "master",
+			"path": "/tiff"
 		}
 	]
 }

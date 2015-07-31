@@ -21,7 +21,5 @@ _testmain.go
 
 *.exe
 
-/vendor/src
-
 # Data, etc
 /data
