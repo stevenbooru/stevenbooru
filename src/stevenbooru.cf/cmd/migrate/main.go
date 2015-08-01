@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	globals.Db.AutoMigrate(&models.User{})
+	globals.Db.AutoMigrate(&models.User{}, &models.Tag{}, &models.Image{})
 
 	log.Println("Migration complete.")
 }
