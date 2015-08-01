@@ -14,15 +14,47 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/bitly/go-simplejson",
+			"repository": "https://github.com/bitly/go-simplejson",
+			"revision": "18db6e68d8fd9cbf2e8ebe4c81a78b96fd9bf05a",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/boj/redistore",
+			"repository": "https://github.com/boj/redistore",
+			"revision": "9c0e6bab4dd444285424f189b8fb0cb03f653242",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/codegangsta/negroni",
 			"repository": "https://github.com/codegangsta/negroni",
 			"revision": "c7477ad8e330bef55bf1ebe300cf8aa67c492d1b",
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/crowdmob/goamz/aws",
+			"repository": "https://github.com/crowdmob/goamz",
+			"revision": "3a06871fe9fc0281ca90f3a7d97258d042ed64c0",
+			"branch": "master",
+			"path": "/aws"
+		},
+		{
+			"importpath": "github.com/crowdmob/goamz/dynamodb",
+			"repository": "https://github.com/crowdmob/goamz",
+			"revision": "3a06871fe9fc0281ca90f3a7d97258d042ed64c0",
+			"branch": "master",
+			"path": "/dynamodb"
+		},
+		{
 			"importpath": "github.com/dchest/blake2b",
 			"repository": "https://github.com/dchest/blake2b",
 			"revision": "5fbfd071ac8d1623f86ac263c2f16e8cb2914184",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/denizeren/dynamostore",
+			"repository": "https://github.com/denizeren/dynamostore",
+			"revision": "69258d14eb58e5a5b894138d7f2f2609a5effc1f",
 			"branch": "master"
 		},
 		{
@@ -44,6 +76,25 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/goincremental/dal",
+			"repository": "https://github.com/goincremental/dal",
+			"revision": "8d816d3890489a686373b1768f951d7b4773a207",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/goincremental/dal/Godeps/_workspace/src/labix.org/v2/mgo",
+			"repository": "https://github.com/goincremental/dal",
+			"revision": "8d816d3890489a686373b1768f951d7b4773a207",
+			"branch": "master",
+			"path": "/Godeps/_workspace/src/labix.org/v2/mgo"
+		},
+		{
+			"importpath": "github.com/goincremental/negroni-sessions",
+			"repository": "https://github.com/goincremental/negroni-sessions",
+			"revision": "3a608a11e2cbf66aa313a850fe65b159a154fb4b",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/gorilla/context",
 			"repository": "https://github.com/gorilla/context",
 			"revision": "215affda49addc4c8ef7e2534915df2c8c35c6cd",
@@ -53,6 +104,18 @@
 			"importpath": "github.com/gorilla/mux",
 			"repository": "https://github.com/gorilla/mux",
 			"revision": "f15e0c49460fd49eebe2bcc8486b05d1bef68d3a",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gorilla/securecookie",
+			"repository": "https://github.com/gorilla/securecookie",
+			"revision": "ba5126409e0340d53e989ad07501a14949889a0d",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gorilla/sessions",
+			"repository": "https://github.com/gorilla/sessions",
+			"revision": "f61c3ec2cf65d69e7efedfd4d060fe128882c951",
 			"branch": "master"
 		},
 		{
@@ -116,6 +179,12 @@
 			"revision": "5ec5e003b21ac1f06e175898413ada23a6797fc0",
 			"branch": "master",
 			"path": "/tiff"
+		},
+		{
+			"importpath": "gopkg.in/mgo.v2",
+			"repository": "https://gopkg.in/mgo.v2",
+			"revision": "3569c88678d88179dcbd68d02ab081cbca3cd4d0",
+			"branch": "v2"
 		}
 	]
 }
