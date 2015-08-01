@@ -47,6 +47,10 @@ func init() {
 		log.Fatal(err)
 	}
 
+	if Config.Site.Testing {
+		Db.LogMode(true)
+	}
+
 	err = Db.DB().Ping()
 	if err != nil {
 		log.Fatal(err)
