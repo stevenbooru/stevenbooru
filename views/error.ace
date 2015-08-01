@@ -1,0 +1,16 @@
+= content title
+  title Whoops!
+
+= content body
+  div class="card red darken-2"
+    div class="card-content white-text"
+      h1 class="center white-text" There was an error!
+
+      p So sorry! We couldn't get you to {{.Data.Path}} because of the below error:
+
+      .row
+        div class="col offset-m3 m6 card red darken-4"
+          div class="card-content"
+            pre {{.Data.Reason}}
+
+      p Please contact us if the problem persists.
