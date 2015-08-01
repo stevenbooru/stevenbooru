@@ -12,6 +12,7 @@ import (
 	"stevenbooru.cf/csrf"
 	"stevenbooru.cf/eye"
 	. "stevenbooru.cf/globals"
+	"stevenbooru.cf/middleware/users"
 	"stevenbooru.cf/models"
 )
 
@@ -58,6 +59,7 @@ func main() {
 	n := negroni.Classic()
 
 	n.Use(sessions.Sessions("stevenbooru", CookieStore))
+	n.Use(&users.Middleware{})
 	middleware.Inject(n)
 	n.UseHandler(mux)
 
