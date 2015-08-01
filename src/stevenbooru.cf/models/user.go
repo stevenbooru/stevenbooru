@@ -1,15 +1,11 @@
 package models
 
 import (
-	"bytes"
 	"errors"
-	"fmt"
-	"io"
 	"net/url"
 	"strings"
 
 	"github.com/Xe/uuid"
-	"github.com/dchest/blake2b"
 	"github.com/jinzhu/gorm"
 	. "stevenbooru.cf/globals"
 )
@@ -69,23 +65,7 @@ func NewUser(values url.Values) (u *User, err error) {
 	}
 
 	salt := uuid.New()[0:14]
-
-	c := &blake2b.Config{
-		Salt: []byte(salt),
-		Size: blake2b.Size,
-	}
-
-	b2b, err := blake2b.New(c)
-	if err != nil {
-		panic(err)
-	}
-
-	b2b.Reset()
-
-	fin := bytes.NewBufferString(password + Config.Site.Pepper)
-	io.Copy(b2b, fin)
-
-	result := fmt.Sprintf("%x", b2b.Sum(nil))
+	result := hashPassword(password, salt)
 
 	myUuid := uuid.NewUUID().String()
 
