@@ -23,8 +23,8 @@ var (
 // User is a user on the Booru.
 type User struct {
 	gorm.Model
-	UUID        string `sql:"unique,size:36" json:"uuid"`  // UUID used in searches, etc
-	ActualName  string `sql:"unique,size:75" json:"-"`     // lower case, unique name used in storage to prevent collisions
+	UUID        string `sql:"unique;size:36" json:"uuid"`  // UUID used in searches, etc
+	ActualName  string `sql:"unique;size:75" json:"-"`     // lower case, unique name used in storage to prevent collisions
 	DisplayName string `sql:"size:75" json:"display_name"` // user name that is displayed to users
 	Email       string `sql:"size:400" json:"-"`           // email address for the user
 	Role        string `json:"role"`                       // role that the user has on the booru
