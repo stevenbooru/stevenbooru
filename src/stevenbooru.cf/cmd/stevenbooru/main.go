@@ -8,7 +8,7 @@ import (
 	"github.com/codegangsta/negroni"
 	"github.com/drone/routes"
 	"stevenbooru.cf/eye"
-	"stevenbooru.cf/globals"
+	. "stevenbooru.cf/globals"
 )
 
 func main() {
@@ -23,5 +23,5 @@ func main() {
 	middleware.Inject(n)
 	n.UseHandler(mux)
 
-	n.Run(fmt.Sprintf("%s:%s", globals.Config.HTTP.Bindhost, globals.Config.HTTP.Port))
+	n.Run(fmt.Sprintf("%s:%s", Config.HTTP.Bindhost, Config.HTTP.Port))
 }
