@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/garyburd/redigo/redis"
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 	"stevenbooru.cf/config"
@@ -13,6 +14,7 @@ import (
 var (
 	Config config.Config
 	Db     gorm.DB
+	Redis  *redis.Pool
 
 	ConfigFileFlag = flag.String("conf", "./cfg/stevenbooru.cfg", "configuration file to load")
 	IrcConfigFlag  = flag.String("ircconf", "./cfg/irc.cfg", "config file for the IRC bots")
@@ -45,4 +47,35 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	log.Println("Connected to the database")
+
+	Redis = &redis.Pool{
+		MaxIdle: 10,
+		Dial: func() (redis.Conn, error) {
+			c, err := redis.Dial("tcp", fmt.Sprintf("%s:%d", Config.Redis.Host, Config.Redis.Port))
+			if err != nil {
+				return nil, err
+			}
+
+			if Config.Redis.Password != "" {
+				if _, err := c.Do("AUTH", Config.Redis.Password); err != nil {
+					c.Close()
+					return nil, err
+				}
+			}
+
+			return c, nil
+		},
+	}
+
+	conn := Redis.Get()
+	defer conn.Close()
+
+	_, err = conn.Do("PING")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Connected to Redis")
 }
