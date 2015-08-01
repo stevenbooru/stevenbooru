@@ -95,6 +95,13 @@ func main() {
 		http.Redirect(rw, r, "/", http.StatusMovedPermanently)
 	})
 
+	// Test code goes here
+	if Config.Site.Testing {
+		mux.Get("/____error____", func(rw http.ResponseWriter, r *http.Request) {
+			eye.HandleError(rw, r, errors.New("test error"))
+		})
+	}
+
 	n := negroni.Classic()
 
 	n.Use(sessions.Sessions("stevenbooru", CookieStore))
