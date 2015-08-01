@@ -15,7 +15,9 @@ func DoTemplate(name string, rw http.ResponseWriter, r *http.Request, data inter
 		return
 	}
 
-	if err := tpl.Execute(rw, data); err != nil {
+	wrapped := Wrap(r, data)
+
+	if err := tpl.Execute(rw, wrapped); err != nil {
 		HandleError(rw, r, err)
 		return
 	}
