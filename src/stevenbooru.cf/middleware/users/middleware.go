@@ -24,7 +24,7 @@ func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next htt
 	user := &models.User{}
 	Db.Where("uuid = ?", uid).First(user)
 
-	r.Header.Set("uid", uid)
-	r.Header.Set("username", user.DisplayName)
-	r.Header.Set("role", user.Role)
+	r.Header.Set("x-sb-uid", uid)
+	r.Header.Set("x-sb-username", user.DisplayName)
+	r.Header.Set("x-sb-role", user.Role)
 }
