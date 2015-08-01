@@ -15,10 +15,9 @@ html lang=en
         ul class="right hide-on-med-and-down"
           {{if ne .Username ""}}
             li
-              a href="/profile/" {{.Username}}
+              a href="/profile/" {{html .Username}}
             li
-              a href="/logout"
-                i class="material-icons large" input
+              a href="/logout" Logout
           {{else}}
             li
               a href="/register" Register
