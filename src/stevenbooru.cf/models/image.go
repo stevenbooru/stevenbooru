@@ -10,4 +10,5 @@ type Image struct {
 	PosterID int
 	Tags     []*Tag
 	Hash     string `sql:"unique;size:128"`
+	Filename string `sql:"size:512"`
 }
