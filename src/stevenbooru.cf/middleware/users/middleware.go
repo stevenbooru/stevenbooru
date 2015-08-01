@@ -12,11 +12,12 @@ type Middleware struct {
 }
 
 func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	defer next(rw, r)
+
 	sess := sessions.GetSession(r)
 
 	uid, ok := sess.Get("uid").(string)
 	if !ok || uid == "" {
-		next(rw, r)
 		return
 	}
 
@@ -26,6 +27,4 @@ func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next htt
 	r.Header.Set("uid", uid)
 	r.Header.Set("username", user.DisplayName)
 	r.Header.Set("role", user.Role)
-
-	next(rw, r)
 }
