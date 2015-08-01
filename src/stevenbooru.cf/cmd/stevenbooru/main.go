@@ -39,16 +39,20 @@ func main() {
 			panic(err)
 		}
 
+		sess := sessions.GetSession(r)
+
 		tok := r.PostForm.Get("token")
 		if !csrf.CheckToken(tok, r) {
 			eye.HandleError(rw, r, errors.New("Invalid CSRF token"))
 			return
 		}
 
-		_, err = models.NewUser(r.PostForm)
+		u, err := models.NewUser(r.PostForm)
 		if err != nil {
 			eye.HandleError(rw, r, err)
 		}
+
+		sess.Set("uid", u.UUID)
 	})
 
 	n := negroni.Classic()
