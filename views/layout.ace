@@ -35,7 +35,7 @@ html lang=en
           div class="col l6 s12"
             h5 class="white-text" Stevenbooru
             p class="grey-text text-lighten-4"
-              Stevenbooru is an image board done in the style of existing image boorus to allow for a unique gathering place for the Steven Universe community. This site is written from scratch in Go and is constantly in development. Takedown requests will be responded to promptly in the order site staff gets them.
+              | Stevenbooru is an image board done in the style of existing image boorus to allow for a unique gathering place for the Steven Universe community. This site is written from scratch in Go and is constantly in development. Takedown requests will be responded to promptly in the order site staff gets them.
 
           div class="col l3 s12"
             h5 class="white-text" Links
@@ -62,9 +62,7 @@ html lang=en
                 a class="white-text" href="#!" Link 4
 
       .footer-copyright
-        .container
-          p Served by node {{.Hostname}}.garnet.stevenbooru.cf
+        .container Served by node {{.Hostname}}.garnet.stevenbooru.cf
 
     script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"
     script src="/materialize/js/materialize.min.js"
-
