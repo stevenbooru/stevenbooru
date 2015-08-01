@@ -28,6 +28,43 @@ func main() {
 		eye.DoTemplate("users/login", rw, r, tok)
 	})
 
+	mux.Post("/login", func(rw http.ResponseWriter, r *http.Request) {
+		err := r.ParseForm()
+
+		if err != nil {
+			panic(err)
+		}
+
+		sess := sessions.GetSession(r)
+
+		tok := r.PostForm.Get("token")
+		if !csrf.CheckToken(tok, r) {
+			eye.HandleError(rw, r, errors.New("Invalid CSRF token"))
+			return
+		}
+
+		user, err := models.Login(r.PostForm)
+		if err != nil {
+			if err == models.ErrBadPassword {
+				err = errors.New("invalid password")
+			}
+
+			eye.HandleError(rw, r, err)
+			return
+		}
+
+		sess.Set("uid", user.UUID)
+
+		http.Redirect(rw, r, "/", http.StatusMovedPermanently)
+	})
+
+	mux.Get("/logout", func(rw http.ResponseWriter, r *http.Request) {
+		sess := sessions.GetSession(r)
+		sess.Delete("uid")
+
+		http.Redirect(rw, r, "/", http.StatusMovedPermanently)
+	})
+
 	mux.Get("/register", func(rw http.ResponseWriter, r *http.Request) {
 		tok := csrf.SetToken(r)
 		eye.DoTemplate("users/register", rw, r, tok)
@@ -54,6 +91,8 @@ func main() {
 		}
 
 		sess.Set("uid", u.UUID)
+
+		http.Redirect(rw, r, "/", http.StatusMovedPermanently)
 	})
 
 	n := negroni.Classic()

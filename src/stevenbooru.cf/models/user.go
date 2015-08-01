@@ -14,6 +14,7 @@ var (
 	ErrUserCreateMissingValues = errors.New("models.User: missing values on creation attempt")
 	ErrInvalidEmail            = errors.New("models: bad email address")
 	ErrDifferentPasswords      = errors.New("models: the same password was not used twice")
+	ErrBadPassword             = errors.New("models: user gave an incorrect password")
 )
 
 // User is a user on the Booru.
@@ -22,7 +23,7 @@ type User struct {
 	UUID        string `sql:"unique;size:36" json:"uuid"`  // UUID used in searches, etc
 	ActualName  string `sql:"unique;size:75" json:"-"`     // lower case, unique name used in storage to prevent collisions
 	DisplayName string `sql:"size:75" json:"display_name"` // user name that is displayed to users
-	Email       string `sql:"size:400" json:"-"`           // email address for the user
+	Email       string `sql:"unique;size:400" json:"-"`    // email address for the user
 	Role        string `json:"role"`                       // role that the user has on the booru
 	AvatarURL   string `json:"avatar_url"`                 // URL to the user's avatar
 	Activated   bool   `json:"-"`                          // Has the user activated their email address?
@@ -31,6 +32,36 @@ type User struct {
 	Salt         string `json:"-"` // Random data added to the password, along with the site's pepper
 
 	// Relationships go here
+}
+
+func Login(values url.Values) (u *User, err error) {
+	email := values.Get("email")
+	if email == "" {
+		return nil, ErrUserCreateMissingValues
+	}
+
+	// TODO: check for duplicate email addresses
+	if !strings.Contains(email, "@") {
+		return nil, ErrInvalidEmail
+	}
+
+	password := values.Get("password")
+	if password == "" {
+		return nil, ErrUserCreateMissingValues
+	}
+
+	user := &User{}
+
+	query := Db.Where("email = ?", email).First(&user)
+	if query.Error != nil {
+		return nil, query.Error
+	}
+
+	if !CheckPassword(u.PasswordHash, u.Salt, password) {
+		return nil, ErrBadPassword
+	}
+
+	return user, nil
 }
 
 // NewUser makes a new user in the database given the values from a HTTP POST request.
@@ -79,7 +110,10 @@ func NewUser(values url.Values) (u *User, err error) {
 		PasswordHash: result,
 	}
 
-	Db.Create(u)
+	query := Db.Create(u)
+	if query.Error != nil {
+		return nil, query.Error
+	}
 
 	if Db.NewRecord(u) {
 		return nil, errors.New("could not create user")
