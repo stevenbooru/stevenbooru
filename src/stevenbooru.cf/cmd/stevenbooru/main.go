@@ -1,33 +1,15 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/Xe/middleware"
 	"github.com/codegangsta/negroni"
 	"github.com/drone/routes"
-	"stevenbooru.cf/config"
 	"stevenbooru.cf/eye"
+	"stevenbooru.cf/globals"
 )
-
-var (
-	c config.Config
-
-	configFileFlag = flag.String("conf", "./cfg/stevenbooru.cfg", "configuration file to load")
-)
-
-func init() {
-	flag.Parse()
-
-	var err error
-	c, err = config.ParseConfig(*configFileFlag)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
 
 func main() {
 	mux := routes.New()
@@ -41,5 +23,5 @@ func main() {
 	middleware.Inject(n)
 	n.UseHandler(mux)
 
-	n.Run(fmt.Sprintf("%s:%s", c.HTTP.Bindhost, c.HTTP.Port))
+	n.Run(fmt.Sprintf("%s:%s", globals.Config.HTTP.Bindhost, globals.Config.HTTP.Port))
 }
