@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Xe/uuid"
 	"github.com/garyburd/redigo/redis"
 	"github.com/goincremental/negroni-sessions"
 	"github.com/goincremental/negroni-sessions/cookiestore"
@@ -83,4 +84,6 @@ func init() {
 	log.Println("Connected to Redis")
 
 	CookieStore = cookiestore.New([]byte(Config.Site.CookieHash))
+
+	uuid.SetNodeID([]byte(Config.Site.Name))
 }
