@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"runtime"
 
 	"github.com/Xe/uuid"
 	"github.com/garyburd/redigo/redis"
@@ -33,6 +34,9 @@ func init() {
 		log.Fatal(err)
 	}
 
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	// Set up the database
 	Db, err = gorm.Open(Config.Database.Kind,
 		fmt.Sprintf(
 			"user=%s password=%s dbname=%s host=%s port=%d sslmode=disable",
@@ -47,10 +51,12 @@ func init() {
 		log.Fatal(err)
 	}
 
+	// Turn on verbose logs for debugging
 	if Config.Site.Testing {
 		Db.LogMode(true)
 	}
 
+	// Test database connection
 	err = Db.DB().Ping()
 	if err != nil {
 		log.Fatal(err)
@@ -58,6 +64,7 @@ func init() {
 
 	log.Println("Connected to the database")
 
+	// Set up redis
 	Redis = &redis.Pool{
 		MaxIdle: 10,
 		Dial: func() (redis.Conn, error) {
@@ -80,6 +87,7 @@ func init() {
 	conn := Redis.Get()
 	defer conn.Close()
 
+	// Test redis
 	_, err = conn.Do("PING")
 	if err != nil {
 		log.Fatal(err)
