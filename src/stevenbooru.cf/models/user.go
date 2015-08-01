@@ -102,7 +102,7 @@ func NewUser(values url.Values) (u *User, err error) {
 	Db.Create(u)
 
 	if Db.NewRecord(u) {
-		return nil, errors.New("something bad happened")
+		return nil, errors.New("could not create user")
 	}
 
 	return
