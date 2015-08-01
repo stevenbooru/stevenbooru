@@ -93,8 +93,19 @@ func main() {
 		}
 
 		sess.Set("uid", u.UUID)
+		sess.AddFlash("Welcome, " + u.DisplayName)
 
 		http.Redirect(rw, r, "/", http.StatusMovedPermanently)
+	})
+
+	mux.Get("/images/upload", func(rw http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("x-sb-uid") != "" {
+			eye.DoTemplate("images/upload", rw, r, nil)
+		} else {
+			s := sessions.GetSession(r)
+
+			s.AddFlash("You need to be logged in to do that")
+		}
 	})
 
 	// Test code goes here
