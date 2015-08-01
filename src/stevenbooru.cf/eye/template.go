@@ -41,7 +41,7 @@ func HandleError(rw http.ResponseWriter, r *http.Request, err error) {
 		return
 	}
 
-	if err := tpl.Execute(rw, data); err != nil {
+	if err := tpl.Execute(rw, Wrap(r, data)); err != nil {
 		http.Error(rw, err.Error(), http.StatusInternalServerError)
 		return
 	}
