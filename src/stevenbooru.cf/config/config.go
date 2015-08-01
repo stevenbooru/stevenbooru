@@ -35,8 +35,9 @@ type Elasticsearch struct {
 
 // Redis is the redis configuration for SB.
 type Redis struct {
-	Host string
-	Port string
+	Host     string
+	Port     int
+	Password string
 }
 
 // HTTP is the http configuration for SB.
