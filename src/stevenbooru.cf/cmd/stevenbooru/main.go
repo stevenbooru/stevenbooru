@@ -54,6 +54,7 @@ func main() {
 		}
 
 		sess.Set("uid", user.UUID)
+		sess.AddFlash("Welcome, " + user.DisplayName)
 
 		http.Redirect(rw, r, "/", http.StatusMovedPermanently)
 	})
@@ -61,6 +62,7 @@ func main() {
 	mux.Get("/logout", func(rw http.ResponseWriter, r *http.Request) {
 		sess := sessions.GetSession(r)
 		sess.Delete("uid")
+		sess.AddFlash("You are no longer logged in as " + r.Header.Get("x-sb-username"))
 
 		http.Redirect(rw, r, "/", http.StatusMovedPermanently)
 	})

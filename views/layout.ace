@@ -26,6 +26,11 @@ html lang=en
           {{end}}
 
     .container
+      {{range $i, $v := .Flashes}}
+        p {{$v}}
+        hr
+      {{end}}
+
       .section
         = yield body
 
