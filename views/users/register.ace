@@ -1,0 +1,30 @@
+= content body
+  h3 Login
+
+  = javascript
+    $(document).ready(function() {
+      $('input#username_text').characterCounter();
+    });
+
+  .row
+    div class="col s12 m6 offset-m3"
+      form action="/register" method="POST"
+        div class="input-field col s12"
+          input id="username_text" name="username" type="text" length="75"
+          label for="username_text" Username
+
+        div class="input-field col s12"
+          input id="email" name="email" type="email" class="validate"
+          label for="email" Email Address
+
+        div class="input-field col s12"
+          input id="password" name="password" type="password" class="validate"
+          label for="password" Password
+
+        div class="input-field col s12"
+          input id="password_confirm" name="password_confirm" type="password" class="validate"
+          label for="password_confirm" Confirm
+
+        input type="hidden" name="token" value="{{.Data}}"
+
+        button class="waves-effect waves-light btn" type="submit" Register
