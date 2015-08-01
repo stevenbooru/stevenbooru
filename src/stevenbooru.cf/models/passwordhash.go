@@ -29,7 +29,3 @@ func hashPassword(password, salt string) (result string) {
 
 	return
 }
-
-func CheckPassword(password, salt, hashed string) bool {
-	return hashed == hashPassword(password, salt)
-}

@@ -57,11 +57,15 @@ func Login(values url.Values) (u *User, err error) {
 		return nil, query.Error
 	}
 
-	if !CheckPassword(u.PasswordHash, u.Salt, password) {
+	if user.checkPassword(password) == false {
 		return nil, ErrBadPassword
 	}
 
 	return user, nil
+}
+
+func (u *User) checkPassword(password string) bool {
+	return u.PasswordHash == hashPassword(password, u.Salt)
 }
 
 // NewUser makes a new user in the database given the values from a HTTP POST request.
