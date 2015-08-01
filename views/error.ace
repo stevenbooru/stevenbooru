@@ -13,4 +13,8 @@
           div class="card-content"
             pre {{.Data.Reason}}
 
+            p
+              | Request ID 
+              pre {{.RequestID}}
+
       p Please contact us if the problem persists.
