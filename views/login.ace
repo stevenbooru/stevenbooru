@@ -1,0 +1,21 @@
+= content body
+  h3 Login
+  .row
+    div class="col s12 m6 offset-m3"
+      form action="/login" method="POST"
+        div class="input-field col s12"
+          input id="email" name="email" type="email" class="validate"
+          label for="email" data-error="wrong" data-success="right" Email Address
+
+        div class="input-field col s12"
+          input id="password" name="password" type="password" class="validate"
+          label for="password" Password
+
+        input type="hidden" name="token" value="{{.Data}}"
+
+        button class="waves-effect waves-light btn" type="submit" Login
+
+  p
+    |
+      Don't have an account?
+    a href="/register" Register here.

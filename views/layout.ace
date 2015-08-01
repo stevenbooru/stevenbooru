@@ -16,9 +16,14 @@ html lang=en
           {{if ne .Username ""}}
             li
               a href="/profile/" {{.Username}}
+            li
+              a href="/logout"
+                i class="material-icons large" input
           {{else}}
             li
-              a href="/login" Login/Register
+              a href="/register" Register
+            li
+              a href="/login" Login
           {{end}}
 
     .container
