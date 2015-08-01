@@ -8,7 +8,7 @@ type Config struct {
 	Redis         Redis
 	HTTP          HTTP
 	Site          Site
-	Roles         map[string]Role
+	Role          map[string]*Role
 }
 
 // Database is the database configuration.
@@ -49,7 +49,9 @@ type HTTP struct {
 type Site struct {
 	ShowAds bool     // Show advertisments?
 	Pepper  string   // String to pepper password hashes with
-	Roles   []string // Site roles to load and evaluate
+	Role    []string // Site roles to load and evaluate
+	Name    string   // Site name
+	Testing bool     // Is this a test site?
 }
 
 /*
