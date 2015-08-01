@@ -15,7 +15,7 @@ func main() {
 	mux := routes.New()
 
 	mux.Get("/", func(rw http.ResponseWriter, r *http.Request) {
-		eye.DoTemplate("views/index", rw, r, nil)
+		eye.DoTemplate("index", rw, r, nil)
 	})
 
 	n := negroni.Classic()

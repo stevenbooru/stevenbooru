@@ -9,7 +9,7 @@ import (
 // DoTemplate does a template with the given data to pass to it. It will be
 // wrapped as .Data.
 func DoTemplate(name string, rw http.ResponseWriter, r *http.Request, data interface{}) {
-	tpl, err := ace.Load("views/layout", name, nil)
+	tpl, err := ace.Load("views/layout", "views/"+name, nil)
 	if err != nil {
 		HandleError(rw, r, err)
 		return
