@@ -48,11 +48,12 @@ type HTTP struct {
 
 // Site contains other information about Stevenbooru.
 type Site struct {
-	ShowAds bool     // Show advertisments?
-	Pepper  string   // String to pepper password hashes with
-	Role    []string // Site roles to load and evaluate
-	Name    string   // Site name
-	Testing bool     // Is this a test site?
+	ShowAds    bool     // Show advertisments?
+	Pepper     string   // String to pepper password hashes with
+	Role       []string // Site roles to load and evaluate
+	Name       string   // Site name
+	CookieHash string   // String to hash cookies against
+	Testing    bool     // Is this a test site?
 }
 
 /*

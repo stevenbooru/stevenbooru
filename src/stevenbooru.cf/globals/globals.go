@@ -6,15 +6,18 @@ import (
 	"log"
 
 	"github.com/garyburd/redigo/redis"
+	"github.com/goincremental/negroni-sessions"
+	"github.com/goincremental/negroni-sessions/cookiestore"
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 	"stevenbooru.cf/config"
 )
 
 var (
-	Config config.Config
-	Db     gorm.DB
-	Redis  *redis.Pool
+	Config      config.Config
+	Db          gorm.DB
+	Redis       *redis.Pool
+	CookieStore sessions.Store
 
 	ConfigFileFlag = flag.String("conf", "./cfg/stevenbooru.cfg", "configuration file to load")
 	IrcConfigFlag  = flag.String("ircconf", "./cfg/irc.cfg", "config file for the IRC bots")
@@ -78,4 +81,6 @@ func init() {
 	}
 
 	log.Println("Connected to Redis")
+
+	CookieStore = cookiestore.New([]byte(Config.Site.CookieHash))
 }

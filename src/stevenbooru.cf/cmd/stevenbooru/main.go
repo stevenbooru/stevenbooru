@@ -8,6 +8,7 @@ import (
 	"github.com/Xe/uuid"
 	"github.com/codegangsta/negroni"
 	"github.com/drone/routes"
+	"github.com/goincremental/negroni-sessions"
 	"stevenbooru.cf/eye"
 	. "stevenbooru.cf/globals"
 )
@@ -25,6 +26,7 @@ func main() {
 
 	n := negroni.Classic()
 
+	n.Use(sessions.Sessions("stevenbooru", CookieStore))
 	middleware.Inject(n)
 	n.UseHandler(mux)
 
