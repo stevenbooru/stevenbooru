@@ -1,16 +1,18 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
 	"github.com/Xe/middleware"
-	"github.com/Xe/uuid"
 	"github.com/codegangsta/negroni"
 	"github.com/drone/routes"
 	"github.com/goincremental/negroni-sessions"
+	"stevenbooru.cf/csrf"
 	"stevenbooru.cf/eye"
 	. "stevenbooru.cf/globals"
+	"stevenbooru.cf/models"
 )
 
 func main() {
@@ -21,7 +23,32 @@ func main() {
 	})
 
 	mux.Get("/login", func(rw http.ResponseWriter, r *http.Request) {
-		eye.DoTemplate("login", rw, r, uuid.New())
+		tok := csrf.SetToken(r)
+		eye.DoTemplate("users/login", rw, r, tok)
+	})
+
+	mux.Get("/register", func(rw http.ResponseWriter, r *http.Request) {
+		tok := csrf.SetToken(r)
+		eye.DoTemplate("users/register", rw, r, tok)
+	})
+
+	mux.Post("/register", func(rw http.ResponseWriter, r *http.Request) {
+		err := r.ParseForm()
+
+		if err != nil {
+			panic(err)
+		}
+
+		tok := r.PostForm.Get("token")
+		if !csrf.CheckToken(tok, r) {
+			eye.HandleError(rw, r, errors.New("Invalid CSRF token"))
+			return
+		}
+
+		_, err = models.NewUser(r.PostForm)
+		if err != nil {
+			eye.HandleError(rw, r, err)
+		}
 	})
 
 	n := negroni.Classic()
