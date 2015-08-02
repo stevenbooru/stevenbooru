@@ -10,7 +10,9 @@ import (
 // DoTemplate does a template with the given data to pass to it. It will be
 // wrapped as .Data.
 func DoTemplate(name string, rw http.ResponseWriter, r *http.Request, data interface{}) {
-	tpl, err := ace.Load("views/layout", "views/"+name, nil)
+	tpl, err := ace.Load("views/layout", "views/"+name, &ace.Options{
+		FuncMap: funcs,
+	})
 	if err != nil {
 		HandleError(rw, r, err)
 		return
@@ -40,7 +42,9 @@ func HandleError(rw http.ResponseWriter, r *http.Request, err error) {
 		Reason: err.Error(),
 	}
 
-	tpl, err := ace.Load("views/layout", "views/error", nil)
+	tpl, err := ace.Load("views/layout", "views/error", &ace.Options{
+		FuncMap: funcs,
+	})
 	if err != nil {
 		http.Error(rw, err.Error(), http.StatusInternalServerError)
 		return

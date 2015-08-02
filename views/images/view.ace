@@ -16,3 +16,6 @@
         div class="card-content white-text"
           p {{html .Data.Image.Description}}
           p Uploaded on: {{html .Data.Image.CreatedAt}}
+          {{if Can .Role "canhide"}}
+            a href="/images/{{.Data.Image.UUID}}/delete" Delete
+          {{end}}
