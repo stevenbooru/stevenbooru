@@ -1,9 +1,14 @@
+/*
+Package users is a middleware for setting internal header information.
+*/
 package users
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/goincremental/negroni-sessions"
+	"github.com/gorilla/context"
 	. "stevenbooru.cf/globals"
 	"stevenbooru.cf/models"
 )
@@ -14,10 +19,6 @@ type Middleware struct {
 func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer next(rw, r)
 
-	if r.Method != "GET" {
-		return
-	}
-
 	sess := sessions.GetSession(r)
 
 	uid, ok := sess.Get("uid").(string)
@@ -27,6 +28,9 @@ func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next htt
 
 	user := &models.User{}
 	Db.Where("uuid = ?", uid).First(user)
+
+	context.Set(r, "user", user)
+	log.Printf("%s", user.DisplayName)
 
 	r.Header.Set("x-sb-uid", uid)
 	r.Header.Set("x-sb-username", user.DisplayName)

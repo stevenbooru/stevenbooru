@@ -9,9 +9,11 @@ import (
 	"github.com/codegangsta/negroni"
 	"github.com/drone/routes"
 	"github.com/goincremental/negroni-sessions"
+	"github.com/gorilla/context"
 	"stevenbooru.cf/csrf"
 	"stevenbooru.cf/eye"
 	. "stevenbooru.cf/globals"
+	mcontext "stevenbooru.cf/middleware/context"
 	"stevenbooru.cf/middleware/users"
 	"stevenbooru.cf/models"
 )
@@ -116,14 +118,7 @@ func main() {
 			return
 		}
 
-		fmt.Printf("%#v", r.Header.Get("x-sb-uuid"))
-
-		user := &models.User{}
-		q := Db.Where("uuid = ?", r.Header.Get("x-sb-uuid")).First(user)
-		if q.Error != nil {
-			eye.HandleError(rw, r, q.Error)
-			return
-		}
+		user := context.Get(r, "user").(*models.User)
 
 		i, err := models.NewImage(r, user)
 		if err != nil {
@@ -144,6 +139,7 @@ func main() {
 	n := negroni.Classic()
 
 	n.Use(sessions.Sessions("stevenbooru", CookieStore))
+	n.UseFunc(mcontext.ClearContextOnExit)
 	n.Use(&users.Middleware{})
 	middleware.Inject(n)
 	n.UseHandler(mux)
