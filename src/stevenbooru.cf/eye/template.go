@@ -51,3 +51,12 @@ func HandleError(rw http.ResponseWriter, r *http.Request, err error) {
 		return
 	}
 }
+
+func Handle404(rw http.ResponseWriter, r *http.Request) {
+	rw.WriteHeader(404)
+	DoTemplate("404", rw, r, struct {
+		Path string
+	}{
+		Path: r.RequestURI,
+	})
+}

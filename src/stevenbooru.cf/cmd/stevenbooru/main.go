@@ -14,6 +14,7 @@ import (
 	"stevenbooru.cf/eye"
 	. "stevenbooru.cf/globals"
 	mcontext "stevenbooru.cf/middleware/context"
+	"stevenbooru.cf/middleware/recover"
 	"stevenbooru.cf/middleware/users"
 	"stevenbooru.cf/models"
 )
@@ -192,6 +193,7 @@ func main() {
 
 	n.Use(sessions.Sessions("stevenbooru", CookieStore))
 	n.UseFunc(mcontext.ClearContextOnExit)
+	n.UseFunc(recovery.Recovery)
 	n.Use(&users.Middleware{})
 	middleware.Inject(n)
 	n.UseHandler(mux)

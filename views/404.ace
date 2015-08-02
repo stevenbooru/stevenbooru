@@ -1,0 +1,15 @@
+= content title
+  title Whoops!
+
+= content body
+  div class="card yellow darken-2"
+    div class="card-content black-text"
+      h1 class="center black-text" Page not found
+
+      p So sorry! We couldn't get you to {{.Data.Path}} because it does not exist.
+
+      p
+        | Request ID 
+        pre {{.RequestID}}
+
+      p Please contact us if the problem persists.
