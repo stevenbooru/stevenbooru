@@ -30,8 +30,6 @@ type Image struct {
 }
 
 func NewImage(r *http.Request, user *User) (i *Image, err error) {
-	iuuid := uuid.NewUUID()
-
 	userUpload, header, err := r.FormFile("file")
 	if err != nil {
 		return nil, err
@@ -64,7 +62,7 @@ func NewImage(r *http.Request, user *User) (i *Image, err error) {
 	mime := header.Header.Get("Content-Type")
 
 	i = &Image{
-		UUID:        iuuid.String(),
+		UUID:        uuid.New(),
 		Poster:      user,
 		PosterID:    user.ID,
 		Mime:        mime,
