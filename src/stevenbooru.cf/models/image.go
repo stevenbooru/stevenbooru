@@ -1,12 +1,15 @@
 package models
 
 import (
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/Xe/uuid"
 	"github.com/jinzhu/gorm"
+	. "stevenbooru.cf/globals"
 )
 
 // Image is an image that has been uploaded to the booru.
@@ -25,7 +28,7 @@ type Image struct {
 func NewImage(r *http.Request, user *User) (i *Image, err error) {
 	iuuid := uuid.NewUUID()
 
-	_, header, err := r.FormFile("file")
+	fin, header, err := r.FormFile("file")
 	if err != nil {
 		return nil, err
 	}
@@ -42,9 +45,33 @@ func NewImage(r *http.Request, user *User) (i *Image, err error) {
 		Poster:   user,
 		PosterID: user.ID,
 		Mime:     mime,
+		Filename: header.Filename,
 	}
 
-	log.Printf("%#v", i)
+	err = os.Mkdir(Config.Storage.Path+"/"+i.UUID, os.ModePerm)
+	if err != nil {
+		return nil, err
+	}
+
+	fout, err := os.Create(Config.Storage.Path + "/" + i.UUID + "/" + i.Filename)
+	if err != nil {
+		return nil, err
+	}
+
+	io.Copy(fout, fin)
+
+	conn := Redis.Get()
+	defer conn.Close()
+
+	_, err = conn.Do("RPUSH", "uploads", i.UUID)
+	if err != nil {
+		return nil, err
+	}
+
+	query := Db.Create(i)
+	if query.Error != nil {
+		return nil, query.Error
+	}
 
 	return
 }
