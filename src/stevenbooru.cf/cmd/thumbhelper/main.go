@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"runtime"
 	"time"
 
 	"github.com/disintegration/imaging"
@@ -11,16 +12,24 @@ import (
 )
 
 func main() {
+	for i := 0; i < (runtime.NumCPU() - 1); i++ {
+		go handleStuff()
+	}
+
 	handleStuff()
 }
 
 func handleStuff() {
 	conn := Redis.Get()
 
+	defer func() {
+		if r := recover(); r != nil {
+			handleStuff()
+		}
+	}()
+
 	for {
 		log.Println("Waiting on new image...")
-
-		start := time.Now()
 
 		ids, err := redis.Strings(conn.Do("BLPOP", "uploads", 0))
 		if err != nil {
@@ -55,21 +64,25 @@ func handleStuff() {
 			continue
 		}
 
-		croppedImage := imaging.CropCenter(image, 256, 256)
+		croppedImage := imaging.Thumbnail(image, 256, 256, imaging.Box)
 		if err != nil {
 			defer conn.Do("RPUSH", "uploads", id)
 			doError(err)
 			continue
 		}
 
-		err = imaging.Save(croppedImage, Config.Storage.Path+"/"+img.UUID+"/thumbnail.jpg")
+		err = imaging.Save(croppedImage, Config.Storage.Path+"/"+img.UUID+"/thumbnail.png")
 		if err != nil {
 			defer conn.Do("RPUSH", "uploads", id)
 			doError(err)
 			continue
 		}
 
-		log.Printf("Wrote thumbnail for image %d:%s in %s", img.ID, img.UUID, time.Since(start).String())
+		log.Printf(
+			"Wrote thumbnail for image %d:%s",
+			img.ID,
+			img.UUID,
+		)
 	}
 
 	conn.Close()
