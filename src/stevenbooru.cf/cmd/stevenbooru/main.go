@@ -61,8 +61,8 @@ func main() {
 
 	mux.Get("/logout", func(rw http.ResponseWriter, r *http.Request) {
 		sess := sessions.GetSession(r)
-		sess.Delete("uid")
-		sess.AddFlash("You are no longer logged in as " + r.Header.Get("x-sb-username"))
+		sess.Clear()
+		sess.AddFlash("You are no longer logged in.")
 
 		http.Redirect(rw, r, "/", http.StatusMovedPermanently)
 	})
@@ -100,12 +100,38 @@ func main() {
 
 	mux.Get("/images/upload", func(rw http.ResponseWriter, r *http.Request) {
 		if r.Header.Get("x-sb-uid") != "" {
-			eye.DoTemplate("images/upload", rw, r, nil)
+			tok := csrf.SetToken(r)
+			eye.DoTemplate("images/upload", rw, r, tok)
 		} else {
 			s := sessions.GetSession(r)
 
 			s.AddFlash("You need to be logged in to do that")
 		}
+	})
+
+	mux.Post("/images/upload", func(rw http.ResponseWriter, r *http.Request) {
+		err := r.ParseMultipartForm(10000000) // 10 MB
+		if err != nil {
+			eye.HandleError(rw, r, err)
+			return
+		}
+
+		fmt.Printf("%#v", r.Header.Get("x-sb-uuid"))
+
+		user := &models.User{}
+		q := Db.Where("uuid = ?", r.Header.Get("x-sb-uuid")).First(user)
+		if q.Error != nil {
+			eye.HandleError(rw, r, q.Error)
+			return
+		}
+
+		i, err := models.NewImage(r, user)
+		if err != nil {
+			eye.HandleError(rw, r, err)
+			return
+		}
+
+		http.Redirect(rw, r, "/images/"+i.UUID, 301)
 	})
 
 	// Test code goes here

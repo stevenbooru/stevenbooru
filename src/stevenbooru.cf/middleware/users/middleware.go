@@ -14,6 +14,10 @@ type Middleware struct {
 func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer next(rw, r)
 
+	if r.Method != "GET" {
+		return
+	}
+
 	sess := sessions.GetSession(r)
 
 	uid, ok := sess.Get("uid").(string)

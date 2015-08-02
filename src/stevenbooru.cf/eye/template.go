@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/yosssi/ace"
+	"stevenbooru.cf/globals"
 )
 
 // DoTemplate does a template with the given data to pass to it. It will be
@@ -26,6 +27,10 @@ func DoTemplate(name string, rw http.ResponseWriter, r *http.Request, data inter
 // HandleError renders an error as a HTML page to the user.
 func HandleError(rw http.ResponseWriter, r *http.Request, err error) {
 	rw.WriteHeader(500)
+
+	if globals.Config.Site.Testing {
+		panic(err)
+	}
 
 	data := struct {
 		Path   string
