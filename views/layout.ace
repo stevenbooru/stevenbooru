@@ -70,4 +70,5 @@ html lang=en
         .container Served by node {{.Hostname}}.garnet.stevenbooru.cf
 
     script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"
+    script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"
     script src="/materialize/js/materialize.min.js"

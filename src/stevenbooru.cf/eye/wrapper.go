@@ -1,7 +1,6 @@
 package eye
 
 import (
-	"log"
 	"net/http"
 	"os"
 
@@ -41,8 +40,6 @@ func Wrap(r *http.Request, data interface{}) *Wrapper {
 		Flashes:   s.Flashes(),
 		Hostname:  hostname,
 	}
-
-	log.Printf("%#v", w)
 
 	return w
 }
