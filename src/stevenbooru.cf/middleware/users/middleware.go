@@ -4,7 +4,6 @@ Package users is a middleware for setting internal header information.
 package users
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/goincremental/negroni-sessions"
@@ -30,7 +29,6 @@ func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next htt
 	Db.Where("uuid = ?", uid).First(user)
 
 	context.Set(r, "user", user)
-	log.Printf("%s", user.DisplayName)
 
 	r.Header.Set("x-sb-uid", uid)
 	r.Header.Set("x-sb-username", user.DisplayName)
