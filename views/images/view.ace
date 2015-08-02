@@ -9,7 +9,7 @@
           a class="card-title" href="/profile/{{.Data.User.UUID}}" {{html .Data.User.DisplayName}}
 
     div class="col s12 m9"
-      img src="/data/{{.Data.Image.UUID}}/{{.Data.Image.Filename}}" width=600
+      img src="/data/{{.Data.Image.UUID}}/{{.Data.Image.Filename}}" style="width:auto; display:block;"
 
 
       div class="card blue-grey darken-3"
