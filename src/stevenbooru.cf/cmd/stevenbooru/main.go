@@ -24,7 +24,7 @@ func main() {
 	mux.Get("/", func(rw http.ResponseWriter, r *http.Request) {
 		var images []string
 
-		rows, err := Db.DB().Query("SELECT uuid FROM images LIMIT 18")
+		rows, err := Db.DB().Query("SELECT uuid FROM images ORDER BY id DESC LIMIT 18")
 		if err != nil {
 			eye.HandleError(rw, r, err)
 			return
