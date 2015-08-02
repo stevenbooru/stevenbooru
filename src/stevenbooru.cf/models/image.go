@@ -73,6 +73,14 @@ ok:
 
 	mime := header.Header.Get("Content-Type")
 
+	if mime == "image/svg+xml" {
+		return nil, errors.New("Unsupported image format")
+	}
+
+	if !strings.HasPrefix(mime, "image/") {
+		return nil, errors.New("Unsupported image format")
+	}
+
 	i = &Image{
 		UUID:        uuid.New(),
 		Poster:      user,
