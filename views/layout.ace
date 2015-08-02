@@ -7,10 +7,15 @@ html lang=en
     = yield title
       title Stevenbooru
 
-    link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/start/jquery-ui.css"
     link rel="stylesheet" href="/materialize/css/materialize.min.css"
+    link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/start/jquery-ui.css"
     link rel="stylesheet" href="/plugins/jquery.tagsinput.min.css"
     link rel="icon" href="/favicon.png" sizes="180x180"
+
+    script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"
+    script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"
+    script type="text/javascript" src="/materialize/js/materialize.min.js"
+    script type="text/javascript" src="/plugins/jquery.tagsinput.min.js"
 
   body
     nav class="black" role="navigation"
@@ -74,8 +79,3 @@ html lang=en
 
       .footer-copyright
         .container Served by node {{.Hostname}}.garnet.stevenbooru.cf
-
-    script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"
-    script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"
-    script type="text/javascript" src="/materialize/js/materialize.min.js"
-    script type="text/javascript" src="/plugins/jquery.tagsinput.min.js"

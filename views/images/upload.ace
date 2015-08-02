@@ -26,19 +26,23 @@
       form action="/images/upload" method="POST" enctype="multipart/form-data"
         .row
           div class="file-field input-field"
-            input class="file-path" name="filepath" type="text"
+            input class="file-path" name="filepath" id="filename" type="text"
             div class="btn"
               span File
-              input type="file" name="file"
+              input type="file" name="file" class="hidden"
+            label for="filename" File to upload (click the line)
 
-        div class="row"
-          div class="col s12 m6 input-field"
+        .row
+          div class="col s12 m12 input-field"
             textarea id="description" name="description" class="materialize-textarea" length="2048"
             label for="description" Description of the image
 
-          div class="col s12 m6 input-field"
-            input id="tags" type="text" class="tags" name="tags" value="php,ios,javascript,ruby,android,kindle"
-            label for="tags" Comma-separated tags for the image
+        .row
+          div class="col s12 m12 input-field"
+            p
+              | Please include at least one rating tag and follow the 
+              a href="/pages/tagging" tagging guidelines.
+            input id="tags" type="text" class="active tags" name="tags" value=""
 
         input type="hidden" name="token" value="{{.Data}}"
 
