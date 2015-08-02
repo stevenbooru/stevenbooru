@@ -64,7 +64,7 @@ func handleStuff() {
 			continue
 		}
 
-		croppedImage := imaging.Thumbnail(image, 256, 256, imaging.Box)
+		croppedImage := imaging.Thumbnail(image, 256, 256, imaging.Lanczos)
 		if err != nil {
 			defer conn.Do("RPUSH", "uploads", id)
 			doError(err)
