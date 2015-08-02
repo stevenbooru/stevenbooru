@@ -1,0 +1,7 @@
+data
+bin
+pkg
+.git
+src/stevenbooru.cf/cmd/migrate/migrate
+src/stevenbooru.cf/cmd/stevenbooru/stevenbooru
+src/stevenbooru.cf/cmd/thumbhelper/thumbhelper
