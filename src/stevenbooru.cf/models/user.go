@@ -110,6 +110,7 @@ func NewUser(values url.Values) (u *User, err error) {
 		UUID:         myUuid,
 		Salt:         salt,
 		PasswordHash: result,
+		AvatarURL:    "/img/avatar_default.jpg",
 	}
 
 	query := Db.Create(u)
