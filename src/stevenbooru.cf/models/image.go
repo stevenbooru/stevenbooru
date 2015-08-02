@@ -2,10 +2,10 @@ package models
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -14,6 +14,10 @@ import (
 	"github.com/dchest/blake2b"
 	"github.com/jinzhu/gorm"
 	. "stevenbooru.cf/globals"
+)
+
+var (
+	ErrNeedRatingTag = errors.New("models: need a rating tag to proceed")
 )
 
 // Image is an image that has been uploaded to the booru.
@@ -54,10 +58,18 @@ func NewImage(r *http.Request, user *User) (i *Image, err error) {
 	io.Copy(b2b, bytes.NewBuffer(data))
 	hash := fmt.Sprintf("%x", b2b.Sum(nil))
 
-	tags := r.FormValue("tags")
+	tagsRaw := r.FormValue("tags")
+	tags := strings.Split(tagsRaw, ",")
 
-	log.Printf("%#v", header.Header)
-	log.Printf("%s", strings.Split(tags, ","))
+	for _, tag := range tags {
+		if strings.HasPrefix(tag, "rating:") {
+			goto ok
+		}
+	}
+
+	return nil, ErrNeedRatingTag
+
+ok:
 
 	mime := header.Header.Get("Content-Type")
 
