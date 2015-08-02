@@ -22,7 +22,27 @@ func main() {
 	mux := routes.New()
 
 	mux.Get("/", func(rw http.ResponseWriter, r *http.Request) {
-		eye.DoTemplate("index", rw, r, nil)
+		var images []string
+
+		rows, err := Db.DB().Query("SELECT uuid FROM images LIMIT 18")
+		if err != nil {
+			eye.HandleError(rw, r, err)
+			return
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var name string
+
+			if err := rows.Scan(&name); err != nil {
+				eye.HandleError(rw, r, err)
+				return
+			}
+
+			images = append(images, name)
+		}
+
+		eye.DoTemplate("images/browse", rw, r, images)
 	})
 
 	mux.Get("/login", func(rw http.ResponseWriter, r *http.Request) {
