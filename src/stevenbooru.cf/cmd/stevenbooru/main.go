@@ -129,6 +129,38 @@ func main() {
 		http.Redirect(rw, r, "/images/"+i.UUID, 301)
 	})
 
+	mux.Get("/images/:id", func(rw http.ResponseWriter, r *http.Request) {
+		params := r.URL.Query()
+		imgID := params.Get(":id")
+
+		if len(imgID) != 36 {
+			eye.HandleError(rw, r, errors.New("no such image"))
+			return
+		}
+
+		img := &models.Image{}
+		q := Db.Where("uuid = ?", imgID).First(img)
+		if q.Error != nil {
+			eye.HandleError(rw, r, q.Error)
+			return
+		}
+
+		user := &models.User{}
+		q = Db.Where("id = ?", img.PosterID).First(user)
+		if q.Error != nil {
+			eye.HandleError(rw, r, q.Error)
+			return
+		}
+
+		eye.DoTemplate("images/view", rw, r, struct {
+			Image *models.Image
+			User  *models.User
+		}{
+			Image: img,
+			User:  user,
+		})
+	})
+
 	// Test code goes here
 	if Config.Site.Testing {
 		mux.Get("/____error____", func(rw http.ResponseWriter, r *http.Request) {

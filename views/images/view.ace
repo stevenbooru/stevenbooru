@@ -1,0 +1,17 @@
+= content body
+  .row
+    div class="col s12 m3"
+      div class="card-small blue-grey darken-1"
+        div class="card-image"
+          img src="{{.Data.User.AvatarURL}}" height="150"
+
+        div class="card-content white-text"
+          a class="card-title" href="/profile/{{.Data.User.UUID}}" {{html .Data.User.DisplayName}}
+
+      div class="card-small blue-grey darken-3"
+        div class="card-content white-text"
+          p {{html .Data.Image.Description}}
+          p Uploaded on: {{html .Data.Image.CreatedAt}}
+
+    div class="col s12 m9"
+      img src="/data/{{.Data.Image.UUID}}/{{.Data.Image.Filename}}" width=600

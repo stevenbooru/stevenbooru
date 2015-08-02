@@ -30,9 +30,6 @@ type User struct {
 
 	PasswordHash string `json:"-"` // Blake2b hashed password of the user
 	Salt         string `json:"-"` // Random data added to the password, along with the site's pepper
-
-	// Relationships go here
-	Images []Image
 }
 
 func Login(values url.Values) (u *User, err error) {
