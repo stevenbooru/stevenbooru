@@ -1,13 +1,17 @@
 package models
 
 import (
+	"bytes"
+	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strings"
 
 	"github.com/Xe/uuid"
+	"github.com/dchest/blake2b"
 	"github.com/jinzhu/gorm"
 	. "stevenbooru.cf/globals"
 )
@@ -28,10 +32,29 @@ type Image struct {
 func NewImage(r *http.Request, user *User) (i *Image, err error) {
 	iuuid := uuid.NewUUID()
 
-	fin, header, err := r.FormFile("file")
+	userUpload, header, err := r.FormFile("file")
 	if err != nil {
 		return nil, err
 	}
+
+	data, err := ioutil.ReadAll(userUpload)
+	if err != nil {
+		return nil, err
+	}
+
+	c := &blake2b.Config{
+		Salt: []byte("lol as if"),
+		Size: blake2b.Size,
+	}
+
+	b2b, err := blake2b.New(c)
+	if err != nil {
+		panic(err)
+	}
+
+	b2b.Reset()
+	io.Copy(b2b, bytes.NewBuffer(data))
+	hash := fmt.Sprintf("%x", b2b.Sum(nil))
 
 	tags := r.FormValue("tags")
 
@@ -41,11 +64,13 @@ func NewImage(r *http.Request, user *User) (i *Image, err error) {
 	mime := header.Header.Get("Content-Type")
 
 	i = &Image{
-		UUID:     iuuid.String(),
-		Poster:   user,
-		PosterID: user.ID,
-		Mime:     mime,
-		Filename: header.Filename,
+		UUID:        iuuid.String(),
+		Poster:      user,
+		PosterID:    user.ID,
+		Mime:        mime,
+		Filename:    header.Filename,
+		Hash:        hash,
+		Description: r.Form.Get("description"),
 	}
 
 	err = os.Mkdir(Config.Storage.Path+"/"+i.UUID, os.ModePerm)
@@ -58,7 +83,7 @@ func NewImage(r *http.Request, user *User) (i *Image, err error) {
 		return nil, err
 	}
 
-	io.Copy(fout, fin)
+	io.Copy(fout, bytes.NewBuffer(data))
 
 	conn := Redis.Get()
 	defer conn.Close()
