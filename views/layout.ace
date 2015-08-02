@@ -6,6 +6,7 @@ html lang=en
     = yield title
       title Stevenbooru
     link rel="stylesheet" href="/materialize/css/materialize.min.css"
+    link rel="stylesheet" href="/plugins/jquery.tagsinput.min.css"
     link rel="icon" href="/favicon.png" sizes="180x180"
 
   body
@@ -73,4 +74,5 @@ html lang=en
 
     script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"
     script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"
-    script src="/materialize/js/materialize.min.js"
+    script type="text/javascript" src="/materialize/js/materialize.min.js"
+    script type="text/javascript" src="/plugins/jquery.tagsinput.min.js"
