@@ -25,7 +25,7 @@ func main() {
 	mux.Get("/", func(rw http.ResponseWriter, r *http.Request) {
 		var images []string
 
-		rows, err := Db.DB().Query("SELECT uuid FROM images ORDER BY id DESC LIMIT 18")
+		rows, err := Db.DB().Query("SELECT uuid FROM images WHERE deleted_at IS NULL ORDER BY id DESC LIMIT 18")
 		if err != nil {
 			eye.HandleError(rw, r, err)
 			return
@@ -43,7 +43,7 @@ func main() {
 			images = append(images, name)
 		}
 
-		eye.DoTemplate("images/browse", rw, r, images)
+		eye.DoTemplate("index", rw, r, images)
 	})
 
 	mux.Get("/login", func(rw http.ResponseWriter, r *http.Request) {
@@ -155,7 +155,7 @@ func main() {
 		imgID := params.Get(":id")
 
 		if len(imgID) != 36 {
-			eye.HandleError(rw, r, errors.New("no such image"))
+			eye.Handle404(rw, r)
 			return
 		}
 
@@ -180,6 +180,38 @@ func main() {
 			Image: img,
 			User:  user,
 		})
+	})
+
+	mux.Get("/images/:id/delete", func(rw http.ResponseWriter, r *http.Request) {
+		params := r.URL.Query()
+		imgID := params.Get(":id")
+
+		if len(imgID) != 36 {
+			eye.Handle404(rw, r)
+			return
+		}
+
+		user := context.Get(r, "user").(*models.User)
+
+		img := &models.Image{}
+		q := Db.Where("uuid = ?", imgID).First(img)
+		if q.Error != nil {
+			eye.HandleError(rw, r, q.Error)
+			return
+		}
+
+		s := sessions.GetSession(r)
+
+		// TODO: *User.Can("textrole")
+		if eye.Can(user.Role, "canhide") {
+			Db.Delete(img)
+
+			s.AddFlash("Deleted image " + img.UUID)
+		} else {
+			s.AddFlash("You do not have the deletion permission.")
+		}
+
+		http.Redirect(rw, r, "/", 301)
 	})
 
 	// Test code goes here
