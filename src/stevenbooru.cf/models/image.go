@@ -106,14 +106,14 @@ ok:
 	conn := Redis.Get()
 	defer conn.Close()
 
-	_, err = conn.Do("RPUSH", "uploads", i.UUID)
-	if err != nil {
-		return nil, err
-	}
-
 	query := Db.Create(i)
 	if query.Error != nil {
 		return nil, query.Error
+	}
+
+	_, err = conn.Do("RPUSH", "uploads", i.UUID)
+	if err != nil {
+		return nil, err
 	}
 
 	return
