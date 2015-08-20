@@ -91,6 +91,15 @@ ok:
 		Description: r.Form.Get("description"),
 	}
 
+	for _, tag := range tags {
+		t, err := NewTag(tag)
+		if err != nil {
+			return nil, err
+		}
+
+		i.Tags = append(i.Tags, t)
+	}
+
 	err = os.Mkdir(Config.Storage.Path+"/"+i.UUID, os.ModePerm)
 	if err != nil {
 		return nil, err
