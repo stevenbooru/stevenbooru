@@ -22,6 +22,7 @@ type Wrapper struct {
 	RequestID string
 	Flashes   []interface{}
 	Data      interface{}
+	SiteName  string
 }
 
 // Wrap wraps a given segment of data into a form that the other layers will
@@ -43,6 +44,7 @@ func Wrap(r *http.Request, data interface{}) *Wrapper {
 		RequestID: r.Header.Get("X-Request-Id"),
 		Flashes:   s.Flashes(),
 		Hostname:  hostname,
+		SiteName:  Config.Site.Name,
 	}
 
 	return w

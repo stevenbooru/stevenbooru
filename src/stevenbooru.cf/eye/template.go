@@ -35,11 +35,13 @@ func HandleError(rw http.ResponseWriter, r *http.Request, err error) {
 	}
 
 	data := struct {
-		Path   string
-		Reason string
+		Path     string
+		Reason   string
+		SiteName string
 	}{
-		Path:   r.URL.String(),
-		Reason: err.Error(),
+		Path:     r.URL.String(),
+		Reason:   err.Error(),
+		SiteName: globals.Config.Site.Name,
 	}
 
 	tpl, err := ace.Load("views/layout", "views/error", &ace.Options{
