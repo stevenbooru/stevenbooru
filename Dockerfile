@@ -1,6 +1,6 @@
 FROM golang:1.4.2
 
-ENV GBUPDATED 08-02-2015
+ENV GBUPDATED 08-19-2015
 RUN go get github.com/constabulary/gb/...
 
 ADD . /app
