@@ -16,6 +16,8 @@
         div class="card-content white-text"
           p {{html .Data.Image.Description}}
           p Uploaded on: {{html .Data.Image.CreatedAt}}
+          p
+            a href="/data/{{.Data.Image.UUID}}/{{.Data.Image.Filename}}" class="btn" View
           {{if Can .Role "canhide"}}
             a href="/images/{{.Data.Image.UUID}}/delete" Delete
           {{end}}
